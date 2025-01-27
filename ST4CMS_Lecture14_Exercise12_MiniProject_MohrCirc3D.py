@@ -121,9 +121,9 @@ def plotMohrsCircle(SigmaEigVal,foutNamePNG):
   
   # Discretize angle to plot the circle
   # and create the fig and axes environments
-  theta =
-  fig   = 
-  ax    = 
+  #theta =
+  #fig   = 
+  #ax    = 
   
   #First plot C2 (major circle)
   # Use the theta discretization done before! 
@@ -179,21 +179,23 @@ if __name__=="__main__":
   #... or if the flag '-h' is used, we provide the user with usage information
   if(len(argv)<2 or argv[1]=='-h'):
     print('------- MohrCirc3D.py --------')
-    print('Usage: python MohrCirc3D.py <FilePrefix (w/o material pt number)> <nMaterialPts> <ext>')
+    print('Usage: python MohrCirc3D.py <FilePrefix> <nMaterialPts> <ext> <#Points>')
     sys.exit()
   #print(len(sys.argv),sys.argv)
   #---------------------------------------------------
   # Capture the user input (command line arguments) into the right variables
-  fnamePrefix = argv[1]
-  nMatPts     = argv[2]
-  fnameExt    = argv[3]
+  # python MohrCirc.py Gr1 MatPt dat 10 
+  fnamePrefix = argv[1] # Gr1
+  MatPt       = argv[2] # MatPt
+  fnameExt    = argv[3] # dat
+  nMatPts     = argv[4] # upto that number ... 10 
   print('Filename Prefix: ',fnamePrefix)
-  print('Filename extension: ',nMatPts)
-  print('Number of materials points: ',fnameExt)
+  print('Material Pt: ', MatPt)
+  print('Filename extension: ',fnameExt)
+  print('Number of materials points: ',nMatPts)
   
   #Conversion factor to be used
   sFac=0.001 #to convert from MPa to GPa
-
   #Loop over all material points...
   #... a) Generate the filename using the format fnamePrefix<number>.fnameExt
   #... b) Read the stress tensor and volume from the file using >>>readData<<<
@@ -201,9 +203,9 @@ if __name__=="__main__":
   #... d) Obtain Eigenvalues of the stress tensor using >>>EigVal<<<
   #... e) Plot Mohr's circle for the corresponding stress state. Generate a name ...
   #        ... for the image file first and pass it as an argument to >>>plotMohrsCircle<<<
-  SigArr=[]
-  VolArr=[]
-  for i in range(1,nMatPts+1):
+  #SigArr=[]
+  #VolArr=[]
+  #for i in range(1,nMatPts+1):
 
 
 
