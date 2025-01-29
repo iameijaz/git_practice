@@ -33,8 +33,12 @@ def readData(fname):
       Stress: numpy array containing the stress of the corresponding Gauss point
       Volume: Volume of the Gauss point (scalar) 
   """
-
-
+  with open(fname,'r') as file:
+      content=file.read()
+      if "#" in file:
+          Vol=file.split(':')[1].strip()
+      else:
+          Stress = [[float(num) for num in line.split(' ')] for line in file]
   return np.array(Stress),Vol
   
 
@@ -186,7 +190,7 @@ if __name__=="__main__":
   # Capture the user input (command line arguments) into the right variables
   # python MohrCirc.py Gr1 MatPt dat 10 
   fnamePrefix = argv[1] # Gr1
-  MatPt       = argv[2] # MatPt
+  MatPt       = int(argv[2]) # MatPt
   fnameExt    = argv[3] # dat
   nMatPts     = argv[4] # upto that number ... 10 
   print('Filename Prefix: ',fnamePrefix)
@@ -197,15 +201,24 @@ if __name__=="__main__":
   #Conversion factor to be used
   sFac=0.001 #to convert from MPa to GPa
   #Loop over all material points...
-  #... a) Generate the filename using the format fnamePrefix<number>.fnameExt
-  #... b) Read the stress tensor and volume from the file using >>>readData<<<
-  #... c) Scale stress values (from MPa to GPa), if desired, using >>>scaleStress<<<
-  #... d) Obtain Eigenvalues of the stress tensor using >>>EigVal<<<
-  #... e) Plot Mohr's circle for the corresponding stress state. Generate a name ...
-  #        ... for the image file first and pass it as an argument to >>>plotMohrsCircle<<<
-  #SigArr=[]
-  #VolArr=[]
-  #for i in range(1,nMatPts+1):
+  for n in range(1,nMatPts+1):
+      #... a) Generate the filename using the format fnamePrefix<number>.fnameExt
+      # Here n will start from 1 to n where n is nMatPts
+      fileName=f"{fnamePrefix}_{MatPt}{n}.{fnameExt}"
+      stress_tensor,volume=readData(fileName)
+      #... b) Read the stress tensor and volume from the file using >>>readData<<<
+      #df = pd.read_csv(fileName, sep=" ", header=None, skiprows=[0]) # This will read data and show as:
+      # This will be a single tensor
+
+
+      #. c) Scale stress values (from MPa to GPa), if desired, using >>>scaleStress<<<
+      #... d) Obtain Eigenvalues of the stress tensor using >>>EigVal<<<
+      #... e) Plot Mohr's circle for the corresponding stress state. Generate a name ...
+      #        ... for the image file first and pass it as an argument to >>>plotMohrsCircle<<<
+
+#SigArr=[]
+#VolArr=[]
+#for i in range(1,nMatPts+1):
 
 
 
