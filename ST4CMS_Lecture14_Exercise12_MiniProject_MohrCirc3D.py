@@ -17,7 +17,7 @@ from sys import argv
 import os
 import numpy as np
 import matplotlib.pyplot as plt
-
+from numpy.linalg import eig
 
 def readData(fname):
   """
@@ -56,7 +56,7 @@ def scaleStress(Sigma,sFac):
   Output:
     scaledSig: scaled stress tensor, i.e., Sigma*Fac
   """
-  
+  scaledSig=np.multiply(Sigma,sFac)
   
   return scaledSig
 
@@ -75,7 +75,9 @@ def AvgStress(n,SigArr,VolArr):
   Output:
     SigAvg: Averaged stress tensor
   """
-  
+  # Summation Sigma_i * V_i // Summation V_i
+  SigAvg=np.einsum(SigmaArr,VolArr)
+  #SigAvg=np.dot(SigArr,VolArr)/np.sum(VolArr) # Reshape ...
   return SigAvg
 
 
@@ -90,7 +92,8 @@ def EigVal(Sigma):
   Output:
     Sig_eigval: SORTED (ascending) Eigen values of the stress tensor
   """
-  
+  eigVals,eigenVectors=eig(Sigma)
+  Sig_eigval = eigVals.argsort()[::-1]
   return Sig_eigval
 
 
@@ -125,7 +128,7 @@ def plotMohrsCircle(SigmaEigVal,foutNamePNG):
   
   # Discretize angle to plot the circle
   # and create the fig and axes environments
-  #theta =
+  #theta = #
   #fig   = 
   #ax    = 
   
@@ -201,35 +204,25 @@ if __name__=="__main__":
   #Conversion factor to be used
   sFac=0.001 #to convert from MPa to GPa
   #Loop over all material points...
+  SigArr=[]
+  VolArr=[]
+  StressArr=[]
   for n in range(1,nMatPts+1):
       #... a) Generate the filename using the format fnamePrefix<number>.fnameExt
       # Here n will start from 1 to n where n is nMatPts
       fileName=f"{fnamePrefix}_{MatPt}{n}.{fnameExt}"
-      stress_tensor,volume=readData(fileName)
       #... b) Read the stress tensor and volume from the file using >>>readData<<<
-      #df = pd.read_csv(fileName, sep=" ", header=None, skiprows=[0]) # This will read data and show as:
-      # This will be a single tensor
-
-
+      orig_stress_tensor,volume=readData(fileName)
+      StressArr.append(orig_stress_tensor)
+      VolArr.append(volume)
       #. c) Scale stress values (from MPa to GPa), if desired, using >>>scaleStress<<<
+      stress_tensor=scaleStress(orig_stress_tensor,sFac) 
       #... d) Obtain Eigenvalues of the stress tensor using >>>EigVal<<<
+      sig_vals=EigVal(stress_tensor) # Values of S1, S2, S3
+      SigArr.append(sig_vals)
       #... e) Plot Mohr's circle for the corresponding stress state. Generate a name ...
       #        ... for the image file first and pass it as an argument to >>>plotMohrsCircle<<<
-
-#SigArr=[]
-#VolArr=[]
-#for i in range(1,nMatPts+1):
-
-
-
-
-
-
-
-
-
-
-
+      # plot mohr function
   
   #Now plot Mohr's circle with the average stress tensor
   #here: volumetric averaging
