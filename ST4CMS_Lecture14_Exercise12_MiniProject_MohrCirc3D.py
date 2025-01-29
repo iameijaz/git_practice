@@ -223,16 +223,20 @@ if __name__=="__main__":
       #... e) Plot Mohr's circle for the corresponding stress state. Generate a name ...
       #        ... for the image file first and pass it as an argument to >>>plotMohrsCircle<<<
       # plot mohr function
-  
+      plotMohrsCircle(SigArr,"scaledStress_MohrCircle.png")
   #Now plot Mohr's circle with the average stress tensor
   #here: volumetric averaging
   #... a) first create a composite array with stress states of all Gauss points
+  stress_arr=pass
   #... b) create another composite array with Volume data of all Gauss points
+  vol_arr=pass
   #... c) call the function >>>AvgStress<<<
+  avg_Stress=AvgStress(stress_arr)
   #... d) Obtain the Eigenvalues of the average  stress tensor
+  eigVals=EigVal(avg_Stress)
   #... e) Plot Mohr's circle for the corresponding stress state. Generate a name ...
   #        ... for the image file first and pass it as an argument to >>>plotMohrsCircle<<<
-
+  plotMohrsCircle(eigVals,"AvgStress_MohrCircle.png")
 
 
 
@@ -249,7 +253,7 @@ if __name__=="__main__":
   #... b) Obtain the Eigenvalues of the average  stress tensor
   #... c) Plot Mohr's circle for the corresponding stress state. Generate a name ...
   #        ... for the image file first and pass it as an argument to >>>plotMohrsCircle<<<
-
+  plotMohrsCircle()
 
 
 

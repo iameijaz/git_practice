@@ -1,5 +1,5 @@
 #!/home/ia97tafa/verbitpy/bin/python3
-
+import numpy as np
 fname="Gr1_MatPt1.dat"
 with open(fname,'r') as file:
     for ix,line in enumerate(file):
@@ -14,4 +14,6 @@ with open(fname,'r') as file:
 
 print(f"The Atomic Volume: {Vol}\n Matrix: {l}")
     
+# l=Stress Tensor
+# We Need to do Summation Sig_i*V_i
 
